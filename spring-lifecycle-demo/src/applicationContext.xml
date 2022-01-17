@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Custom processor class to run destroy for prototype scoped beans -->
+	<bean id="customProcessor"
+		class="com.springlifecycle.MyCustomBeanProcessor">
+	</bean>
+
+	<bean id="luckyFortune"
+		class="com.springlifecycle.LuckyFortuneServiceImpl">
+	</bean>
+
+	<!-- Init method and destroy method eg -->
+	<bean id="myCoachUsedInMain"
+		class="com.springlifecycle.TrackCoach" scope="singleton"
+		init-method="initMethod" destroy-method="destroyMethod">
+		<constructor-arg ref="luckyFortune" />
+	</bean>
+
+	<!-- destroy method not called for prototype scoped bean destroy-method="destroyMethodPrototypeScopeCoach" -->
+	<bean id="prototypeScopeCoach"
+		class="com.springlifecycle.PrototypeScopeCoach" scope="prototype"
+		init-method="initMethodPrototypeScopeCoach">
+		<constructor-arg ref="luckyFortune" />
+	</bean>
+
+</beans>
+
+
+
+
+
